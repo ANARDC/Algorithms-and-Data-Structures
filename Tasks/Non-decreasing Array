@@ -1,0 +1,34 @@
+/*
+ * Условие:
+ * * Учитывая массив nums с n целыми числами, ваша задача состоит в том, чтобы проверить, может ли он стать неубывающим, изменив не более 1 элемента.
+ * * Мы определяем массив неубывающим, если nums[i] <= nums[i + 1] имеет место для каждого i (0-based) такое, что (0 <= i <= n - 2).
+ *
+ * Форматы:
+ * * Input: nums = [4,2,3]
+ * * Output: true
+ * * Explanation: Вы можете изменить первые 4 на 1, чтобы получить неубывающий массив
+ */
+
+extension Array where Element == Int {
+  var checkPossibility: Bool {
+    var extremum: Int?
+    
+    for index in self.indices[self.startIndex..<self.endIndex-1] where self[index] > self[index+1] {
+      if extremum != nil {
+        return false
+      }
+      extremum = index
+    }
+    
+    return (
+      extremum == nil ||
+      extremum == 0 ||
+      self[extremum!-1] <= self[extremum!+1] ||
+      self[extremum!] <= self[extremum!+2]
+    )
+  }
+}
+
+let nums = [2,3,3,2,2]
+
+print(nums.checkPossibility) // false
